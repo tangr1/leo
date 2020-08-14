@@ -3,18 +3,15 @@ package main
 
 import (
 	"leo/cmd/leo/command"
+	"os"
 
 	"github.com/fatih/color"
-	"github.com/jung-kurt/gofpdf"
 )
 
 func main() {
-	color.Green("Hello")
-	pdf := gofpdf.New("P", "mm", "A4", "")
-	pdf.AddPage()
-	pdf.SetFont("Arial", "B", 16)
-	pdf.Cell(40, 10, "Hello, world")
-	pdf.OutputFileAndClose("hello.pdf")
+	if len(os.Args) == 1 {
+		os.Args = append(os.Args, "cal")
+	}
 	if err := command.Command().Execute(); err != nil {
 		color.Red("启动leo失败: %v\n", err)
 	}

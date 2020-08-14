@@ -8,7 +8,7 @@ import (
 
 func Command() *cobra.Command {
 	rootCmd := &cobra.Command{Use: "leo"}
-	rootCmd.AddCommand(VersionCommand())
+	rootCmd.AddCommand(VersionCommand(), CalculationCommand())
 	config.InitFlag(rootCmd)
 	return rootCmd
 }

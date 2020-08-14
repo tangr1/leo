@@ -18,11 +18,15 @@ default_tool=(
 target=()
 default_flag=1
 aarm=0
-while getopts "xa:" opt
+windows=0
+while getopts "xwa:" opt
 do
     case $opt in
         x)
         aarm=1
+        ;;
+        w)
+        windows=1
         ;;
         a)
         default_flag=0
@@ -49,10 +53,18 @@ if [ $aarm -eq 1 ]; then
     export CXX=/mnt/eng-nfs/external/hisi-linux/x86-arm/Hi3559A_V100R001C02SPC020/aarch64-himix100-linux/bin/aarch64-himix100-linux-g++
     build_args="${build_args} -tags aarch64"
 fi
+if [ $windows -eq 1 ]; then
+    export CGO_ENABLED=1
+    export GOOS=windows
+    export GOARCH=386
+fi
 
 INSTALLDIR=${CURRDIR}/build/package
 if [ $aarm -eq 1 ]; then
     INSTALLDIR=${CURRDIR}/build/package/linux_arm64
+fi
+if [ $windows -eq 1 ]; then
+    INSTALLDIR=${CURRDIR}/build/package/windows
 fi
 echo "$INSTALLDIR"
 
